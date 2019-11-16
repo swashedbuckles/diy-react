@@ -1,0 +1,22 @@
+{
+  "name": "diy-react",
+  "version": "1.0.0",
+  "description": "> https://pomb.us/build-your-own-react/",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/swashedbuckles/diy-react.git"
+  },
+  "author": "Tom Joseph",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/swashedbuckles/diy-react/issues"
+  },
+  "homepage": "https://github.com/swashedbuckles/diy-react#readme",
+  "devDependencies": {
+    "jest": "^24.9.0"
+  }
+}
