@@ -6,33 +6,58 @@
  */
 
 /**
+ * @param {object} config
+ * @return {element}
+ */
+function createElement(type, props, children=[]) {
+	return { 
+    type, 
+    props: { 
+      ...props, 
+      children: [].concat(children)
+        .map(child => typeof child === 'object' ? child : createTextElement(child))
+    } 
+  };
+}
+
+function createTextElement(value) {
+  return {
+    type: 'TEXT_ELEMENT',
+    props: {
+      nodeValue: text,
+      children: []
+    }
+  };
+}
+
+/**
  * @param {element} element
  * @param {HTMLElement} container
  */
 function render(element = {}, container) {
-  element.props = element.props || {};
+	element.props = element.props || {};
 
-  const node = document.createElement(element.type);
-  const children = [].concat(element.props.children);
-  delete element.props.children;
+	const node = document.createElement(element.type);
+	const children = element.props.children;
+	delete element.props.children;
 
-  const propNames = Object.keys(element.props);
-  propNames.forEach(name => node.setAttribute(name, element.props[name]));
+	const propNames = Object.keys(element.props);
+	propNames.forEach((name) => node[name] = element.props[name]);
 
-  children.forEach(child => {
-    if(typeof child === 'string') {
-      const text = document.createTextNode(child);
-      node.appendChild(text);
-    }
-
-    if(typeof child === 'object') {
+	children.forEach((child) => {
+    if (typeof child === 'object') {
       render(child, node);
+      return;
     }
-  });
+    
+    render(createElement(child), node);
+	});
 
-  container.appendChild(node);
+	container.appendChild(node);
 }
 
 module.exports = {
-  render
+  render,
+  createElement,
+  createTextNode
 };
